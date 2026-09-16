@@ -98,7 +98,7 @@
   .state-row,.haz>summary,.theme-toggle,#state-select{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .state-row:hover{background:var(--surface-2)}
   .state-row[aria-current="true"]{background:var(--band);box-shadow:inset 3px 0 0 var(--accent)}
-  .state-row .rk{font-family:var(--font-mono);font-size:12px;color:var(--faint)}
+  .state-row .rk{font-family:var(--font-mono);font-size:12px;color:var(--muted)}
   .state-row .nm{font-weight:500}
   .state-row .bar{grid-column:2/4;height:4px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:5px}
   .state-row .bar>i{display:block;height:100%;background:var(--accent);border-radius:3px}
@@ -188,6 +188,9 @@
     color:var(--muted);font-size:13px;line-height:1.6}
   .foot b{color:var(--muted);font-weight:600}
   .empty{color:var(--muted);padding:40px 0;font-family:var(--font-display);font-size:18px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .state-row:focus-visible,.haz>summary:focus-visible,.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  #state-search,#state-select,.theme-toggle{border-color:var(--faint)}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
   .static-index{margin:26px 0 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:12px 16px}
@@ -220,7 +223,8 @@
       </div>
       <ol class="state-list" id="stateList"></ol>
     </aside>
-    <section class="detail" id="detail" aria-live="polite"></section>
+    <p class="sr-only" id="status" role="status" aria-live="polite"></p>
+    <section class="detail" id="detail"></section>
   </main>
 
   
@@ -261,7 +265,7 @@
       b.innerHTML='<span class="rk num">'+s.rank+'</span>'+
         '<span class="nm">'+esc(s.name)+'</span>'+
         '<span class="sc num">'+s.score.toFixed(0)+'</span>'+
-        '<span class="bar"><i style="width:'+(100*s.score/maxScore).toFixed(1)+'%"></i></span>';
+        '<span class="bar" aria-hidden="true"><i style="width:'+(100*s.score/maxScore).toFixed(1)+'%"></i></span>';
       b.addEventListener("click", function(){ select(ab); });
       li.appendChild(b); listEl.appendChild(li);
     });
@@ -274,12 +278,12 @@
     const peak = tc.map(function(v){return v===Math.max.apply(null,tc) && v>0;});
     let h='<div class="cal-wrap"><div class="cal">';
     h+='<div class="corner"></div>';
-    for(let m=0;m<12;m++) h+='<div class="mhead'+(peak[m]?' peak':'')+'">'+MON[m][0]+'</div>';
+    for(let m=0;m<12;m++) h+='<div class="mhead'+(peak[m]?' peak':'')+'" aria-hidden="true">'+MON[m][0]+'</div>';
     // overlap intensity strip
-    h+='<div class="rlabel" style="color:var(--muted);font-size:11.5px;font-weight:600">Hazards active</div>';
+    h+='<div class="rlabel" style="color:var(--muted);font-size:11.5px;font-weight:600">Hazards active<span class="sr-only"> by month: '+tc.map(function(v,i){return MON[i]+' '+v;}).join(', ')+'</span></div>';
     for(let m=0;m<12;m++){
       const hgt=Math.round(6+ (tc[m]/mx)*20);
-      h+='<div class="tbar" title="'+tc[m]+' types active in '+MON[m]+'"><i style="height:'+hgt+'px"></i></div>';
+      h+='<div class="tbar" aria-hidden="true"><i style="height:'+hgt+'px"></i></div>';
     }
     TYPES.forEach(function(t){
       const key=t[0];
@@ -287,11 +291,11 @@
       const yr = key==="plant";
       const months = yr ? [1,2,3,4,5,6,7,8,9,10,11,12] : (s.type_active_months[key]||[]);
       const on = {}; months.forEach(function(m){on[m]=1;});
-      h+='<div class="rlabel"><span class="dot" style="background:'+cssvar(t[2])+'"></span>'+t[1]+'</div>';
+      h+='<div class="rlabel"><span class="dot" style="background:'+cssvar(t[2])+'"></span>'+t[1]+'<span class="sr-only">, active '+(yr?'all year':(months.length?months.map(function(m){return MON[m-1];}).join(', '):'no months recorded'))+'</span></div>';
       for(let m=1;m<=12;m++){
         const cls="cell"+(on[m]?" on":"")+(yr?" yr":"")+(peak[m-1]?" peakcol":"");
         const st = (on[m] && !yr) ? ' style="background:'+cssvar(t[2])+'"' : "";
-        h+='<div class="'+cls+'"'+st+'></div>';
+        h+='<div class="'+cls+'"'+st+' aria-hidden="true"></div>';
       }
     });
     h+='</div>';
@@ -350,8 +354,9 @@
         '<div class="big">'+esc(s.peak_overlap||"—")+'</div>'+
         '<p>'+s.peak_types+' kinds of hazard are active at the same time. Keep off-leash pets closest during this stretch.</p></div></div>'+
       '<div class="chips">'+chips+'</div>'+
-      '<p class="section-label">When each hazard is active</p>'+ calendar(s)+
-      '<p class="section-label">What’s in your state, and when it’s an emergency</p>'+ hazardGroups(s);
+      '<h3 class="section-label">When each hazard is active</h3>'+ calendar(s)+
+      '<h3 class="section-label">What’s in your state, and when it’s an emergency</h3>'+ hazardGroups(s);
+    document.getElementById("status").textContent="Showing "+s.name+", ranked "+s.rank+" of "+DATA.n_states+".";
     if(!(opts&&opts.noScroll)) d.scrollIntoView({block:"nearest"});
     const sel=document.getElementById("state-select"); if(sel && sel.value!==ab) sel.value=ab;
   }
