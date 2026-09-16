@@ -7,10 +7,10 @@
 <style>
   :root{
     --bg:#EAEBE3; --surface:#F6F7F1; --surface-2:#FEFEFB; --ink:#1C271F;
-    --muted:#566158; --faint:#8A9488; --line:#D3D7C9;
+    --muted:#3F4A42; --faint:#566158; --line:#D3D7C9;
     --accent:#2C6E49; --accent-ink:#21563A; --band:rgba(44,110,73,.13);
-    --sev1:#B98A1E; --sev1-bg:rgba(185,138,30,.14);
-    --sev2:#C4661F; --sev2-bg:rgba(196,102,31,.14);
+    --sev1:#6F5312; --sev1-bg:rgba(185,138,30,.16);
+    --sev2:#8F4410; --sev2-bg:rgba(196,102,31,.16);
     --sev3:#A62A38; --sev3-bg:rgba(166,42,56,.11);
     --c-snake:#A62A38; --c-scorpion:#C4661F; --c-amphibian:#3F7D5E;
     --c-foxtail:#9A7B2E; --c-mushroom:#6E5296; --c-plant:#2C6E49;
@@ -23,11 +23,11 @@
   @media (prefers-color-scheme:dark){
     :root:not([data-theme="light"]){
       --bg:#10150F; --surface:#171E15; --surface-2:#1E271C; --ink:#E7EADF;
-      --muted:#9DA898; --faint:#6C7768; --line:#29331F;
+      --muted:#B3BDAE; --faint:#8E998B; --line:#29331F;
       --accent:#74C48E; --accent-ink:#A6DDB8; --band:rgba(116,196,142,.16);
       --sev1:#E0BE4B; --sev1-bg:rgba(224,190,75,.15);
       --sev2:#E8924E; --sev2-bg:rgba(232,146,78,.15);
-      --sev3:#E36B79; --sev3-bg:rgba(227,107,121,.14);
+      --sev3:#EB7F8B; --sev3-bg:rgba(227,107,121,.16);
       --c-snake:#E36B79; --c-scorpion:#E8924E; --c-amphibian:#66BF92;
       --c-foxtail:#D3B24E; --c-mushroom:#A98BD1; --c-plant:#74C48E;
       --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.38);
@@ -35,11 +35,11 @@
   }
   :root[data-theme="dark"]{
     --bg:#10150F; --surface:#171E15; --surface-2:#1E271C; --ink:#E7EADF;
-    --muted:#9DA898; --faint:#6C7768; --line:#29331F;
+    --muted:#B3BDAE; --faint:#8E998B; --line:#29331F;
     --accent:#74C48E; --accent-ink:#A6DDB8; --band:rgba(116,196,142,.16);
     --sev1:#E0BE4B; --sev1-bg:rgba(224,190,75,.15);
     --sev2:#E8924E; --sev2-bg:rgba(232,146,78,.15);
-    --sev3:#E36B79; --sev3-bg:rgba(227,107,121,.14);
+    --sev3:#EB7F8B; --sev3-bg:rgba(227,107,121,.16);
     --c-snake:#E36B79; --c-scorpion:#E8924E; --c-amphibian:#66BF92;
     --c-foxtail:#D3B24E; --c-mushroom:#A98BD1; --c-plant:#74C48E;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.38);
@@ -82,10 +82,11 @@
     #state-select{display:block}
   }
   .rail-head{margin-bottom:10px}
-  .rail-head label{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
-    text-transform:uppercase;color:var(--faint);display:block;margin-bottom:8px}
+  .rail-head label{font-size:14px;font-weight:600;color:var(--ink);display:block;margin-bottom:8px}
+  .rail-head label span{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
   #state-search{width:100%;padding:9px 12px;border:1px solid var(--line);
     border-radius:8px;background:var(--surface-2);color:var(--ink);font-family:var(--font-ui);font-size:14px}
+  #state-search::placeholder{color:var(--muted);opacity:1}
   #state-search:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
   .state-list{list-style:none;margin:0;padding:0;max-height:70vh;overflow-y:auto;
     border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
@@ -108,7 +109,7 @@
   .d-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin-bottom:4px}
   .d-head h2{font-family:var(--font-display);font-weight:600;font-size:clamp(24px,4vw,34px);
     margin:0;letter-spacing:-.01em}
-  .d-rank{font-family:var(--font-mono);font-size:13px;color:var(--muted);
+  .d-rank{font-size:13px;color:var(--muted);
     border:1px solid var(--line);border-radius:100px;padding:3px 10px}
   .d-sub{color:var(--muted);margin:2px 0 20px}
 
@@ -116,8 +117,7 @@
     border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
     border-radius:var(--radius);padding:14px 16px;margin-bottom:22px}
   .callout .big{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--accent-ink);line-height:1}
-  .callout .lbl{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--muted)}
+  .callout .lbl{font-size:12.5px;font-weight:600;color:var(--muted)}
   .callout p{margin:3px 0 0;font-size:13.5px;color:var(--muted)}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
@@ -125,10 +125,9 @@
     border:1px solid var(--line);border-radius:100px;padding:5px 11px 5px 8px;background:var(--surface)}
   .chip .dot{width:9px;height:9px;border-radius:50%}
   .chip b{font-variant-numeric:tabular-nums}
-  .chip.zero{opacity:.42}
+  .chip.zero{color:var(--muted);border-style:dashed}
 
-  .section-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--faint);margin:0 0 12px;
+  .section-label{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 12px;
     display:flex;align-items:center;gap:10px}
   .section-label::after{content:"";flex:1;height:1px;background:var(--line)}
 
@@ -140,13 +139,13 @@
   .cal .mhead{font-family:var(--font-mono);font-size:10px;color:var(--faint);text-align:center;padding-bottom:2px}
   .cal .mhead.peak{color:var(--accent-ink);font-weight:700}
   .cal .tbar{height:26px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:2px}
-  .cal .tbar>i{width:62%;background:var(--accent);border-radius:2px 2px 0 0;opacity:.55;min-height:2px}
+  .cal .tbar>i{width:62%;background:var(--accent);border-radius:2px 2px 0 0;opacity:.9;min-height:2px}
   .cal .rlabel{font-size:12.5px;color:var(--ink);display:flex;align-items:center;gap:7px;font-weight:500}
   .cal .rlabel .dot{width:9px;height:9px;border-radius:2px;flex:none}
   .cal .cell{height:20px;border-radius:3px;background:var(--line);opacity:.35}
   .cal .cell.on{opacity:1}
   .cal .cell.peakcol{box-shadow:inset 0 0 0 1.5px var(--band)}
-  .cal .cell.yr{opacity:.6;background:repeating-linear-gradient(45deg,var(--c-plant) 0 3px,transparent 3px 6px)}
+  .cal .cell.yr{opacity:1;background:repeating-linear-gradient(45deg,var(--c-plant) 0 3px,transparent 3px 6px)}
   .cal-note{font-size:12px;color:var(--muted);margin:12px 0 0;display:flex;gap:16px;flex-wrap:wrap}
   .cal-note span{display:inline-flex;align-items:center;gap:6px}
   .cal-note .band-key{width:14px;height:12px;border-radius:2px;background:var(--band);
@@ -171,7 +170,7 @@
     grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:11px 14px}
   .haz>summary::-webkit-details-marker{display:none}
   .haz>summary:hover{background:var(--surface-2)}
-  .haz .sev{font-family:var(--font-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;
+  .haz .sev{font-size:11px;letter-spacing:.03em;text-transform:uppercase;
     font-weight:700;padding:3px 7px;border-radius:5px;white-space:nowrap}
   .sev.t3{color:var(--sev3);background:var(--sev3-bg)} .sev.t2{color:var(--sev2);background:var(--sev2-bg)}
   .sev.t1{color:var(--sev1);background:var(--sev1-bg)}
@@ -180,14 +179,13 @@
   @media (max-width:560px){.haz>summary{grid-template-columns:auto 1fr}.haz .season{display:none}}
   .haz .body{padding:0 14px 13px 14px;border-top:1px dashed var(--line);margin-top:0;display:grid;gap:7px;padding-top:11px}
   .haz .rf{display:flex;gap:9px;font-size:13.5px}
-  .haz .rf .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-    color:var(--faint);flex:none;width:74px;padding-top:2px}
+  .haz .rf .k{font-size:12px;font-weight:600;color:var(--muted);flex:none;width:96px;padding-top:1px}
   .urg{font-weight:600}.urg.go{color:var(--sev3)}
   .haz .caret{color:var(--faint);transition:transform .18s}
   .haz[open] .caret{transform:rotate(90deg)}
 
   .foot{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);
-    color:var(--faint);font-size:12px;line-height:1.6}
+    color:var(--muted);font-size:13px;line-height:1.6}
   .foot b{color:var(--muted);font-weight:600}
   .empty{color:var(--muted);padding:40px 0;font-family:var(--font-display);font-size:18px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -208,7 +206,7 @@
     <div class="brand">
       <p class="eyebrow">The Hazard Map · A field guide to the dangerous yard</p>
       <h1>Know before it's nine on a Sunday</h1>
-      <p class="dek">Pick your state to see the outdoor hazards near you — what's out there, when each one turns dangerous, and the same-night red flags worth an emergency visit.</p>
+      <p class="dek">Pick your state to see the outdoor hazards near you: what's out there, when each one is most active, and the warning signs that mean a same-night emergency visit.</p>
     </div>
     <button class="theme-toggle" id="themeBtn" aria-label="Toggle light or dark theme" title="Toggle theme">◐</button>
   </header>
@@ -216,7 +214,7 @@
   <main class="layout">
     <aside class="rail">
       <div class="rail-head">
-        <label>50 states · most → least hazardous</label>
+        <label>Pick your state <span>Ranked from most to least hazardous</span></label>
         <input id="state-search" type="text" placeholder="Search a state…" autocomplete="off" aria-label="Search states">
         <select id="state-select" aria-label="Choose your state"></select>
       </div>
@@ -226,7 +224,7 @@
   </main>
 
   
-<details class="static-index" id="static-index"><summary>Full ranking of all 50 states (text version)</summary><p>Severity-weighted, type-normalized hazard score (0&ndash;100) across 121 confirmed outdoor hazards: toxic plants, foxtail grasses, venomous snakes, scorpions, toxic amphibians, and toxic mushrooms. Presence is confirmed occurrence (USDA PLANTS, GBIF); toxic plants are a year-round risk.</p><ol><li><strong>#1 California</strong> &mdash; hazard score 66.7; 68 confirmed outdoor hazards (venomous snakes 7, scorpions 4, toxic amphibians 6, foxtail grasses 5, toxic mushrooms 16, toxic plants 30); peak overlap Apr–Jul.</li><li><strong>#2 Texas</strong> &mdash; hazard score 56.4; 69 confirmed outdoor hazards (venomous snakes 12, scorpions 2, toxic amphibians 7, foxtail grasses 4, toxic mushrooms 6, toxic plants 38); peak overlap May–Jun, Sep.</li><li><strong>#3 Arizona</strong> &mdash; hazard score 50.9; 50 confirmed outdoor hazards (venomous snakes 11, scorpions 3, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 6, toxic plants 21); peak overlap Jul–Aug.</li><li><strong>#4 New Mexico</strong> &mdash; hazard score 47.5; 48 confirmed outdoor hazards (venomous snakes 9, scorpions 3, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 6, toxic plants 22); peak overlap Jul–Aug.</li><li><strong>#5 North Carolina</strong> &mdash; hazard score 47.4; 70 confirmed outdoor hazards (venomous snakes 5, scorpions 2, toxic amphibians 5, foxtail grasses 3, toxic mushrooms 12, toxic plants 43); peak overlap Jun–Aug.</li><li><strong>#6 Pennsylvania</strong> &mdash; hazard score 46.8; 67 confirmed outdoor hazards (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 13, toxic plants 42); peak overlap May, Jul–Sep.</li><li><strong>#7 New York</strong> &mdash; hazard score 44.7; 68 confirmed outdoor hazards (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 14, toxic plants 43); peak overlap May, Jul–Aug.</li><li><strong>#8 Oregon</strong> &mdash; hazard score 44.4; 51 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 13, toxic plants 27); peak overlap May–Jul.</li><li><strong>#9 Washington</strong> &mdash; hazard score 44.2; 50 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 13, toxic plants 26); peak overlap Apr–Jun, Aug.</li><li><strong>#10 Illinois</strong> &mdash; hazard score 44.0; 59 confirmed outdoor hazards (venomous snakes 4, scorpions 1, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 11, toxic plants 35); peak overlap Apr–May, Aug–Sep.</li><li><strong>#11 Utah</strong> &mdash; hazard score 43.4; 47 confirmed outdoor hazards (venomous snakes 5, scorpions 2, toxic amphibians 3, foxtail grasses 5, toxic mushrooms 5, toxic plants 27); peak overlap Jun.</li><li><strong>#12 Ohio</strong> &mdash; hazard score 43.0; 66 confirmed outdoor hazards (venomous snakes 4, scorpions 0, toxic amphibians 5, foxtail grasses 4, toxic mushrooms 10, toxic plants 43); peak overlap Jul–Aug.</li><li><strong>#13 New Jersey</strong> &mdash; hazard score 42.7; 61 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 10, toxic plants 40); peak overlap Jul–Sep.</li><li><strong>#14 Florida</strong> &mdash; hazard score 42.1; 64 confirmed outdoor hazards (venomous snakes 8, scorpions 3, toxic amphibians 5, foxtail grasses 1, toxic mushrooms 7, toxic plants 40); peak overlap May–Jun.</li><li><strong>#15 Maryland</strong> &mdash; hazard score 41.9; 63 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 12, toxic plants 41); peak overlap Jul–Sep.</li><li><strong>#16 Georgia</strong> &mdash; hazard score 41.7; 70 confirmed outdoor hazards (venomous snakes 7, scorpions 1, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 10, toxic plants 45); peak overlap May–Jun.</li><li><strong>#17 Massachusetts</strong> &mdash; hazard score 41.0; 63 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 5, foxtail grasses 4, toxic mushrooms 10, toxic plants 42); peak overlap May, Aug–Sep.</li><li><strong>#18 South Carolina</strong> &mdash; hazard score 40.7; 61 confirmed outdoor hazards (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 3, toxic mushrooms 9, toxic plants 37); peak overlap Jun–Sep.</li><li><strong>#19 Oklahoma</strong> &mdash; hazard score 40.1; 51 confirmed outdoor hazards (venomous snakes 7, scorpions 1, toxic amphibians 5, foxtail grasses 4, toxic mushrooms 4, toxic plants 30); peak overlap Apr, Jun–Jul.</li><li><strong>#20 Virginia</strong> &mdash; hazard score 39.6; 64 confirmed outdoor hazards (venomous snakes 3, scorpions 0, toxic amphibians 5, foxtail grasses 3, toxic mushrooms 11, toxic plants 42); peak overlap Apr–May, Jul–Sep.</li><li><strong>#21 Tennessee</strong> &mdash; hazard score 39.0; 61 confirmed outdoor hazards (venomous snakes 4, scorpions 1, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 12, toxic plants 38); peak overlap Apr, Jun–Sep.</li><li><strong>#22 Missouri</strong> &mdash; hazard score 38.9; 55 confirmed outdoor hazards (venomous snakes 5, scorpions 1, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 8, toxic plants 34); peak overlap Apr, Jun.</li><li><strong>#23 Alabama</strong> &mdash; hazard score 37.9; 64 confirmed outdoor hazards (venomous snakes 7, scorpions 0, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 9, toxic plants 41); peak overlap May–Jul, Sep.</li><li><strong>#24 Idaho</strong> &mdash; hazard score 36.5; 38 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 3, foxtail grasses 5, toxic mushrooms 9, toxic plants 19); peak overlap May–Jul.</li><li><strong>#25 Colorado</strong> &mdash; hazard score 35.9; 40 confirmed outdoor hazards (venomous snakes 2, scorpions 1, toxic amphibians 3, foxtail grasses 4, toxic mushrooms 9, toxic plants 21); peak overlap May–Aug.</li><li><strong>#25 Mississippi</strong> &mdash; hazard score 35.9; 56 confirmed outdoor hazards (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 6, toxic plants 36); peak overlap May–Aug.</li><li><strong>#27 Michigan</strong> &mdash; hazard score 35.4; 57 confirmed outdoor hazards (venomous snakes 1, scorpions 0, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 15, toxic plants 35); peak overlap Jul–Sep.</li><li><strong>#27 Nevada</strong> &mdash; hazard score 35.4; 28 confirmed outdoor hazards (venomous snakes 5, scorpions 2, toxic amphibians 3, foxtail grasses 5, toxic mushrooms 1, toxic plants 12); peak overlap Apr, Jun–Aug.</li><li><strong>#29 Kansas</strong> &mdash; hazard score 34.8; 49 confirmed outdoor hazards (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 7, toxic plants 28); peak overlap Apr, Jul.</li><li><strong>#30 Arkansas</strong> &mdash; hazard score 34.5; 53 confirmed outdoor hazards (venomous snakes 6, scorpions 1, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 6, toxic plants 34); peak overlap Jun–Jul, Sep.</li><li><strong>#30 Connecticut</strong> &mdash; hazard score 34.5; 57 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 9, toxic plants 39); peak overlap Aug.</li><li><strong>#32 Indiana</strong> &mdash; hazard score 34.1; 54 confirmed outdoor hazards (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 9, toxic plants 35); peak overlap Aug.</li><li><strong>#33 Louisiana</strong> &mdash; hazard score 32.6; 55 confirmed outdoor hazards (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 1, toxic mushrooms 6, toxic plants 36); peak overlap Apr, Jun.</li><li><strong>#33 Maine</strong> &mdash; hazard score 32.6; 45 confirmed outdoor hazards (venomous snakes 1, scorpions 0, toxic amphibians 2, foxtail grasses 4, toxic mushrooms 9, toxic plants 29); peak overlap May, Aug–Sep.</li><li><strong>#35 Montana</strong> &mdash; hazard score 32.5; 37 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 2, foxtail grasses 5, toxic mushrooms 6, toxic plants 22); peak overlap Jun.</li><li><strong>#36 New Hampshire</strong> &mdash; hazard score 32.4; 50 confirmed outdoor hazards (venomous snakes 0, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 9, toxic plants 34); peak overlap May, Aug.</li><li><strong>#37 Delaware</strong> &mdash; hazard score 31.8; 52 confirmed outdoor hazards (venomous snakes 1, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 7, toxic plants 37); peak overlap Sep.</li><li><strong>#38 West Virginia</strong> &mdash; hazard score 31.3; 57 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 1, toxic mushrooms 13, toxic plants 37); peak overlap Jun–Sep.</li><li><strong>#39 Kentucky</strong> &mdash; hazard score 30.5; 54 confirmed outdoor hazards (venomous snakes 4, scorpions 0, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 7, toxic plants 37); peak overlap Jun–Sep.</li><li><strong>#40 Wyoming</strong> &mdash; hazard score 29.5; 33 confirmed outdoor hazards (venomous snakes 3, scorpions 0, toxic amphibians 2, foxtail grasses 4, toxic mushrooms 7, toxic plants 17); peak overlap Jun–Jul.</li><li><strong>#41 Wisconsin</strong> &mdash; hazard score 28.0; 46 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 11, toxic plants 29); peak overlap May, Aug–Sep.</li><li><strong>#42 Minnesota</strong> &mdash; hazard score 27.2; 42 confirmed outdoor hazards (venomous snakes 1, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 12, toxic plants 25); peak overlap May, Jul.</li><li><strong>#43 Iowa</strong> &mdash; hazard score 26.9; 44 confirmed outdoor hazards (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 6, toxic plants 29); peak overlap Jun–Jul.</li><li><strong>#44 Nebraska</strong> &mdash; hazard score 25.6; 39 confirmed outdoor hazards (venomous snakes 4, scorpions 1, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 3, toxic plants 27); peak overlap Jul.</li><li><strong>#45 Vermont</strong> &mdash; hazard score 23.3; 45 confirmed outdoor hazards (venomous snakes 1, scorpions 0, toxic amphibians 2, foxtail grasses 1, toxic mushrooms 9, toxic plants 32); peak overlap Aug–Sep.</li><li><strong>#46 Rhode Island</strong> &mdash; hazard score 21.3; 43 confirmed outdoor hazards (venomous snakes 0, scorpions 0, toxic amphibians 3, foxtail grasses 1, toxic mushrooms 6, toxic plants 33); peak overlap Aug–Sep.</li><li><strong>#47 Alaska</strong> &mdash; hazard score 17.8; 17 confirmed outdoor hazards (venomous snakes 0, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 7, toxic plants 6); peak overlap May–Aug.</li><li><strong>#48 South Dakota</strong> &mdash; hazard score 17.4; 28 confirmed outdoor hazards (venomous snakes 2, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 1, toxic plants 21); peak overlap Jul.</li><li><strong>#49 North Dakota</strong> &mdash; hazard score 15.2; 26 confirmed outdoor hazards (venomous snakes 1, scorpions 0, toxic amphibians 1, foxtail grasses 2, toxic mushrooms 1, toxic plants 21); peak overlap Jun–Aug.</li><li><strong>#50 Hawaii</strong> &mdash; hazard score 14.2; 21 confirmed outdoor hazards (venomous snakes 0, scorpions 0, toxic amphibians 1, foxtail grasses 2, toxic mushrooms 2, toxic plants 16); peak overlap Apr–May.</li></ol></details>
+<details class="static-index" id="static-index"><summary>Full ranking of all 50 states (text version)</summary><p>Hazard score (0&ndash;100) across 121 confirmed outdoor hazards, each weighted by severity with the six hazard types weighted equally: toxic plants, foxtail grasses, venomous snakes, scorpions, toxic amphibians, and toxic mushrooms. Presence is confirmed occurrence (USDA PLANTS, GBIF); toxic plants are a year-round risk.</p><ol><li><strong>#1 California</strong> &mdash; hazard score 67 out of 100; 68 outdoor hazards found (venomous snakes 7, scorpions 4, toxic amphibians 6, foxtail grasses 5, toxic mushrooms 16, toxic plants 30); riskiest window Apr–Jul.</li><li><strong>#2 Texas</strong> &mdash; hazard score 56 out of 100; 69 outdoor hazards found (venomous snakes 12, scorpions 2, toxic amphibians 7, foxtail grasses 4, toxic mushrooms 6, toxic plants 38); riskiest window May–Jun, Sep.</li><li><strong>#3 Arizona</strong> &mdash; hazard score 51 out of 100; 50 outdoor hazards found (venomous snakes 11, scorpions 3, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 6, toxic plants 21); riskiest window Jul–Aug.</li><li><strong>#4 New Mexico</strong> &mdash; hazard score 48 out of 100; 48 outdoor hazards found (venomous snakes 9, scorpions 3, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 6, toxic plants 22); riskiest window Jul–Aug.</li><li><strong>#5 North Carolina</strong> &mdash; hazard score 47 out of 100; 70 outdoor hazards found (venomous snakes 5, scorpions 2, toxic amphibians 5, foxtail grasses 3, toxic mushrooms 12, toxic plants 43); riskiest window Jun–Aug.</li><li><strong>#6 Pennsylvania</strong> &mdash; hazard score 47 out of 100; 67 outdoor hazards found (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 13, toxic plants 42); riskiest window May, Jul–Sep.</li><li><strong>#7 New York</strong> &mdash; hazard score 45 out of 100; 68 outdoor hazards found (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 14, toxic plants 43); riskiest window May, Jul–Aug.</li><li><strong>#8 Oregon</strong> &mdash; hazard score 44 out of 100; 51 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 13, toxic plants 27); riskiest window May–Jul.</li><li><strong>#9 Washington</strong> &mdash; hazard score 44 out of 100; 50 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 13, toxic plants 26); riskiest window Apr–Jun, Aug.</li><li><strong>#10 Illinois</strong> &mdash; hazard score 44 out of 100; 59 outdoor hazards found (venomous snakes 4, scorpions 1, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 11, toxic plants 35); riskiest window Apr–May, Aug–Sep.</li><li><strong>#11 Utah</strong> &mdash; hazard score 43 out of 100; 47 outdoor hazards found (venomous snakes 5, scorpions 2, toxic amphibians 3, foxtail grasses 5, toxic mushrooms 5, toxic plants 27); riskiest window Jun.</li><li><strong>#12 Ohio</strong> &mdash; hazard score 43 out of 100; 66 outdoor hazards found (venomous snakes 4, scorpions 0, toxic amphibians 5, foxtail grasses 4, toxic mushrooms 10, toxic plants 43); riskiest window Jul–Aug.</li><li><strong>#13 New Jersey</strong> &mdash; hazard score 43 out of 100; 61 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 5, toxic mushrooms 10, toxic plants 40); riskiest window Jul–Sep.</li><li><strong>#14 Florida</strong> &mdash; hazard score 42 out of 100; 64 outdoor hazards found (venomous snakes 8, scorpions 3, toxic amphibians 5, foxtail grasses 1, toxic mushrooms 7, toxic plants 40); riskiest window May–Jun.</li><li><strong>#15 Maryland</strong> &mdash; hazard score 42 out of 100; 63 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 4, toxic mushrooms 12, toxic plants 41); riskiest window Jul–Sep.</li><li><strong>#16 Georgia</strong> &mdash; hazard score 42 out of 100; 70 outdoor hazards found (venomous snakes 7, scorpions 1, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 10, toxic plants 45); riskiest window May–Jun.</li><li><strong>#17 Massachusetts</strong> &mdash; hazard score 41 out of 100; 63 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 5, foxtail grasses 4, toxic mushrooms 10, toxic plants 42); riskiest window May, Aug–Sep.</li><li><strong>#18 South Carolina</strong> &mdash; hazard score 41 out of 100; 61 outdoor hazards found (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 3, toxic mushrooms 9, toxic plants 37); riskiest window Jun–Sep.</li><li><strong>#19 Oklahoma</strong> &mdash; hazard score 40 out of 100; 51 outdoor hazards found (venomous snakes 7, scorpions 1, toxic amphibians 5, foxtail grasses 4, toxic mushrooms 4, toxic plants 30); riskiest window Apr, Jun–Jul.</li><li><strong>#20 Virginia</strong> &mdash; hazard score 40 out of 100; 64 outdoor hazards found (venomous snakes 3, scorpions 0, toxic amphibians 5, foxtail grasses 3, toxic mushrooms 11, toxic plants 42); riskiest window Apr–May, Jul–Sep.</li><li><strong>#21 Tennessee</strong> &mdash; hazard score 39 out of 100; 61 outdoor hazards found (venomous snakes 4, scorpions 1, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 12, toxic plants 38); riskiest window Apr, Jun–Sep.</li><li><strong>#22 Missouri</strong> &mdash; hazard score 39 out of 100; 55 outdoor hazards found (venomous snakes 5, scorpions 1, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 8, toxic plants 34); riskiest window Apr, Jun.</li><li><strong>#23 Alabama</strong> &mdash; hazard score 38 out of 100; 64 outdoor hazards found (venomous snakes 7, scorpions 0, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 9, toxic plants 41); riskiest window May–Jul, Sep.</li><li><strong>#24 Idaho</strong> &mdash; hazard score 36 out of 100; 38 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 3, foxtail grasses 5, toxic mushrooms 9, toxic plants 19); riskiest window May–Jul.</li><li><strong>#25 Colorado</strong> &mdash; hazard score 36 out of 100; 40 outdoor hazards found (venomous snakes 2, scorpions 1, toxic amphibians 3, foxtail grasses 4, toxic mushrooms 9, toxic plants 21); riskiest window May–Aug.</li><li><strong>#25 Mississippi</strong> &mdash; hazard score 36 out of 100; 56 outdoor hazards found (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 6, toxic plants 36); riskiest window May–Aug.</li><li><strong>#27 Michigan</strong> &mdash; hazard score 35 out of 100; 57 outdoor hazards found (venomous snakes 1, scorpions 0, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 15, toxic plants 35); riskiest window Jul–Sep.</li><li><strong>#27 Nevada</strong> &mdash; hazard score 35 out of 100; 28 outdoor hazards found (venomous snakes 5, scorpions 2, toxic amphibians 3, foxtail grasses 5, toxic mushrooms 1, toxic plants 12); riskiest window Apr, Jun–Aug.</li><li><strong>#29 Kansas</strong> &mdash; hazard score 35 out of 100; 49 outdoor hazards found (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 2, toxic mushrooms 7, toxic plants 28); riskiest window Apr, Jul.</li><li><strong>#30 Arkansas</strong> &mdash; hazard score 34 out of 100; 53 outdoor hazards found (venomous snakes 6, scorpions 1, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 6, toxic plants 34); riskiest window Jun–Jul, Sep.</li><li><strong>#30 Connecticut</strong> &mdash; hazard score 34 out of 100; 57 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 9, toxic plants 39); riskiest window Aug.</li><li><strong>#32 Indiana</strong> &mdash; hazard score 34 out of 100; 54 outdoor hazards found (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 9, toxic plants 35); riskiest window Aug.</li><li><strong>#33 Louisiana</strong> &mdash; hazard score 33 out of 100; 55 outdoor hazards found (venomous snakes 6, scorpions 1, toxic amphibians 5, foxtail grasses 1, toxic mushrooms 6, toxic plants 36); riskiest window Apr, Jun.</li><li><strong>#33 Maine</strong> &mdash; hazard score 33 out of 100; 45 outdoor hazards found (venomous snakes 1, scorpions 0, toxic amphibians 2, foxtail grasses 4, toxic mushrooms 9, toxic plants 29); riskiest window May, Aug–Sep.</li><li><strong>#35 Montana</strong> &mdash; hazard score 32 out of 100; 37 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 2, foxtail grasses 5, toxic mushrooms 6, toxic plants 22); riskiest window Jun.</li><li><strong>#36 New Hampshire</strong> &mdash; hazard score 32 out of 100; 50 outdoor hazards found (venomous snakes 0, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 9, toxic plants 34); riskiest window May, Aug.</li><li><strong>#37 Delaware</strong> &mdash; hazard score 32 out of 100; 52 outdoor hazards found (venomous snakes 1, scorpions 0, toxic amphibians 4, foxtail grasses 3, toxic mushrooms 7, toxic plants 37); riskiest window Sep.</li><li><strong>#38 West Virginia</strong> &mdash; hazard score 31 out of 100; 57 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 4, foxtail grasses 1, toxic mushrooms 13, toxic plants 37); riskiest window Jun–Sep.</li><li><strong>#39 Kentucky</strong> &mdash; hazard score 30 out of 100; 54 outdoor hazards found (venomous snakes 4, scorpions 0, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 7, toxic plants 37); riskiest window Jun–Sep.</li><li><strong>#40 Wyoming</strong> &mdash; hazard score 30 out of 100; 33 outdoor hazards found (venomous snakes 3, scorpions 0, toxic amphibians 2, foxtail grasses 4, toxic mushrooms 7, toxic plants 17); riskiest window Jun–Jul.</li><li><strong>#41 Wisconsin</strong> &mdash; hazard score 28 out of 100; 46 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 11, toxic plants 29); riskiest window May, Aug–Sep.</li><li><strong>#42 Minnesota</strong> &mdash; hazard score 27 out of 100; 42 outdoor hazards found (venomous snakes 1, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 12, toxic plants 25); riskiest window May, Jul.</li><li><strong>#43 Iowa</strong> &mdash; hazard score 27 out of 100; 44 outdoor hazards found (venomous snakes 3, scorpions 0, toxic amphibians 4, foxtail grasses 2, toxic mushrooms 6, toxic plants 29); riskiest window Jun–Jul.</li><li><strong>#44 Nebraska</strong> &mdash; hazard score 26 out of 100; 39 outdoor hazards found (venomous snakes 4, scorpions 1, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 3, toxic plants 27); riskiest window Jul.</li><li><strong>#45 Vermont</strong> &mdash; hazard score 23 out of 100; 45 outdoor hazards found (venomous snakes 1, scorpions 0, toxic amphibians 2, foxtail grasses 1, toxic mushrooms 9, toxic plants 32); riskiest window Aug–Sep.</li><li><strong>#46 Rhode Island</strong> &mdash; hazard score 21 out of 100; 43 outdoor hazards found (venomous snakes 0, scorpions 0, toxic amphibians 3, foxtail grasses 1, toxic mushrooms 6, toxic plants 33); riskiest window Aug–Sep.</li><li><strong>#47 Alaska</strong> &mdash; hazard score 18 out of 100; 17 outdoor hazards found (venomous snakes 0, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 7, toxic plants 6); riskiest window May–Aug.</li><li><strong>#48 South Dakota</strong> &mdash; hazard score 17 out of 100; 28 outdoor hazards found (venomous snakes 2, scorpions 0, toxic amphibians 2, foxtail grasses 2, toxic mushrooms 1, toxic plants 21); riskiest window Jul.</li><li><strong>#49 North Dakota</strong> &mdash; hazard score 15 out of 100; 26 outdoor hazards found (venomous snakes 1, scorpions 0, toxic amphibians 1, foxtail grasses 2, toxic mushrooms 1, toxic plants 21); riskiest window Jun–Aug.</li><li><strong>#50 Hawaii</strong> &mdash; hazard score 14 out of 100; 21 outdoor hazards found (venomous snakes 0, scorpions 0, toxic amphibians 1, foxtail grasses 2, toxic mushrooms 2, toxic plants 16); riskiest window Apr–May.</li></ol></details>
 <footer class="foot" id="foot"></footer>
 </div>
 
@@ -278,7 +276,7 @@
     h+='<div class="corner"></div>';
     for(let m=0;m<12;m++) h+='<div class="mhead'+(peak[m]?' peak':'')+'">'+MON[m][0]+'</div>';
     // overlap intensity strip
-    h+='<div class="rlabel" style="color:var(--muted);font-family:var(--font-mono);font-size:10px;letter-spacing:.06em">HAZARD TYPES ACTIVE</div>';
+    h+='<div class="rlabel" style="color:var(--muted);font-size:11.5px;font-weight:600">Hazards active</div>';
     for(let m=0;m<12;m++){
       const hgt=Math.round(6+ (tc[m]/mx)*20);
       h+='<div class="tbar" title="'+tc[m]+' types active in '+MON[m]+'"><i style="height:'+hgt+'px"></i></div>';
@@ -297,8 +295,8 @@
       }
     });
     h+='</div>';
-    h+='<p class="cal-note"><span><span class="band-key"></span>Peak-overlap window: <b style="color:var(--accent-ink);margin-left:3px">'+esc(s.peak_overlap)+'</b> ('+s.peak_types+' hazard types at once)</span>'+
-       '<span>Toxic plants shown hatched — a year-round background risk.</span></p>';
+    h+='<p class="cal-note"><span><span class="band-key"></span>Riskiest window: <b style="color:var(--accent-ink);margin-left:3px">'+esc(s.peak_overlap)+'</b> ('+s.peak_types+' kinds of hazard active at once)</span>'+
+       '<span>Toxic plants are a risk all year, so they are shaded in every month.</span></p>';
     h+='</div>';
     return h;
   }
@@ -316,14 +314,14 @@
         const tier=x.tier;
         const go = /go now/i.test(x.urgency||"");
         h+='<details class="haz"><summary>'+
-             '<span class="sev t'+tier+'">'+(tier===3?"ER":tier===2?"Mod":"Mild")+'</span>'+
+             '<span class="sev t'+tier+'">'+(tier===3?"ER":tier===2?"Moderate":"Mild")+'</span>'+
              '<span class="hn">'+esc(x.name)+' <i>'+esc(x.sci)+'</i></span>'+
              '<span class="season">'+esc(x.active_label)+' <span class="caret">›</span></span>'+
            '</summary>'+
            '<div class="body">'+
-             '<div class="rf"><span class="k">Red flags</span><span>'+esc(x.signs||"—")+'</span></div>'+
-             '<div class="rf"><span class="k">Onset</span><span>'+esc(x.onset||"—")+'</span></div>'+
-             '<div class="rf"><span class="k">Action</span><span class="urg'+(go?" go":"")+'">'+esc(x.urgency||"—")+'</span></div>'+
+             '<div class="rf"><span class="k">Warning signs</span><span>'+esc(x.signs||"—")+'</span></div>'+
+             '<div class="rf"><span class="k">How soon</span><span>'+esc(x.onset||"—")+'</span></div>'+
+             '<div class="rf"><span class="k">What to do</span><span class="urg'+(go?" go":"")+'">'+esc(x.urgency||"—")+'</span></div>'+
              '<div class="rf"><span class="k">Toxin</span><span style="color:var(--muted)">'+esc(x.toxin||"—")+'</span></div>'+
            '</div></details>';
       });
@@ -341,19 +339,19 @@
     const chips = TYPES.map(function(t){
       const n=s.subscores[t[0]];
       return '<span class="chip'+(n?"":" zero")+'"><span class="dot" style="background:'+cssvar(t[2])+'"></span>'+
-        t[1].replace("Toxic ","")+' <b>'+n+'</b></span>';
+        t[1].replace("Toxic ","").replace(/^./,function(c){return c.toUpperCase();})+' <b>'+n+'</b></span>';
     }).join("");
     const d=document.getElementById("detail");
     d.innerHTML =
       '<div class="d-head"><h2>'+esc(s.name)+'</h2>'+
-        '<span class="d-rank num">#'+s.rank+' of '+DATA.n_states+' most hazardous</span></div>'+
-      '<p class="d-sub"><b class="num">'+s.n_present+'</b> confirmed outdoor hazards present · severity-weighted, type-normalized score <b class="num">'+s.score.toFixed(1)+'</b></p>'+
-      '<div class="callout"><div><div class="lbl">Single most dangerous span</div>'+
+        '<span class="d-rank num">Ranked #'+s.rank+' of '+DATA.n_states+'</span></div>'+
+      '<p class="d-sub"><b class="num">'+s.n_present+'</b> outdoor hazards found in '+esc(s.name)+' · hazard score <b class="num">'+s.score.toFixed(0)+'</b> out of 100</p>'+
+      '<div class="callout"><div><div class="lbl">Riskiest time of year</div>'+
         '<div class="big">'+esc(s.peak_overlap||"—")+'</div>'+
-        '<p>When '+s.peak_types+' kinds of hazard are active at once — the stretch to keep an off-leash pet closest.</p></div></div>'+
+        '<p>'+s.peak_types+' kinds of hazard are active at the same time. Keep off-leash pets closest during this stretch.</p></div></div>'+
       '<div class="chips">'+chips+'</div>'+
-      '<p class="section-label">The seasonal stagger</p>'+ calendar(s)+
-      '<p class="section-label">What’s out there &amp; the same-night red flags</p>'+ hazardGroups(s);
+      '<p class="section-label">When each hazard is active</p>'+ calendar(s)+
+      '<p class="section-label">What’s in your state, and when it’s an emergency</p>'+ hazardGroups(s);
     if(!(opts&&opts.noScroll)) d.scrollIntoView({block:"nearest"});
     const sel=document.getElementById("state-select"); if(sel && sel.value!==ab) sel.value=ab;
   }
@@ -373,10 +371,14 @@
   });
 
   document.getElementById("foot").innerHTML =
-    '<b>Method.</b> Presence is confirmed occurrence — toxic plants &amp; foxtails from USDA PLANTS, venomous snakes, scorpions, amphibians &amp; mushrooms from GBIF (≥ 3 records). '+
-    'Severity tiers &amp; red-flag signs are drawn from ASPCA, Pet Poison Helpline &amp; NAMA and are educational, not veterinary advice. '+
-    'Seasonal timing is from GBIF occurrence months (wildlife &amp; mushrooms) and documented awn season (foxtails); toxic plants are treated as year-round. '+
-    'This maps <b>risk exposure</b> — what a pet could encounter — not a poisoning rate. When in doubt, call your vet or ASPCA Poison Control (888-426-4435).';
+    '<b>How the score works.</b> Each state\'s hazard score (0 to 100) counts the hazards confirmed there, weights each one by how dangerous it is, '+
+    'and gives the six hazard types equal weight, so a state with many mild plants cannot outrank one with a few deadly snakes. '+
+    '(In technical terms: a severity-weighted, type-normalized index.) '+
+    '<b>Where the data comes from.</b> Toxic plants and foxtails: USDA PLANTS database. Snakes, scorpions, amphibians and mushrooms: '+
+    'GBIF occurrence records (3 or more per state). Severity tiers and warning signs: ASPCA, Pet Poison Helpline and the North American Mycological Association. '+
+    'Each hazard\'s active months come from when those records were logged; toxic plants are treated as a year-round risk. '+
+    '<b>What it shows.</b> What a pet could encounter in each state, not how often pets are poisoned. This is educational, not veterinary advice. '+
+    'When in doubt, call your primary care vet or ASPCA Poison Control (888-426-4435).';
 
   renderRail("");
   // mobile: native state picker (the 50-row list + search are hidden on small screens)
