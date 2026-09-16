@@ -59,16 +59,28 @@
     line-height:1.02;letter-spacing:-.01em;margin:0;text-wrap:balance}
   .dek{color:var(--muted);max-width:60ch;margin:12px 0 0;font-size:15.5px}
   .theme-toggle{flex:none;background:var(--surface);border:1px solid var(--line);
-    color:var(--ink);width:40px;height:40px;border-radius:50%;cursor:pointer;
+    color:var(--ink);width:44px;height:44px;border-radius:50%;cursor:pointer;
     font-size:17px;box-shadow:var(--shadow)}
   .theme-toggle:hover{border-color:var(--accent)}
 
   /* layout */
   .layout{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start}
-  @media (max-width:820px){.layout{grid-template-columns:1fr}}
+  .layout>*{min-width:0} /* grid items default to min-width:auto, which let the 520px calendar stretch the whole page sideways on phones */
+  @media (max-width:820px){.layout{grid-template-columns:1fr;gap:18px}}
 
   /* state rail */
   .rail{position:sticky;top:16px}
+  /* mobile: a native dropdown replaces the 50-row list (no nested scrolling, one tap, 16px so iOS doesn't zoom) */
+  #state-select{display:none;width:100%;padding:12px 40px 12px 12px;border:1px solid var(--line);border-radius:10px;
+    background:var(--surface-2);color:var(--ink);font-family:var(--font-ui);font-size:16px;-webkit-appearance:none;appearance:none;
+    background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
+    background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px,6px 6px;background-repeat:no-repeat}
+  #state-select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+  @media (max-width:820px){
+    .rail{position:static}          /* a sticky 370px list pinned over the content is the wrong pattern on a phone */
+    #state-search,.state-list{display:none}
+    #state-select{display:block}
+  }
   .rail-head{margin-bottom:10px}
   .rail-head label{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
     text-transform:uppercase;color:var(--faint);display:block;margin-bottom:8px}
@@ -82,6 +94,7 @@
     width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);
     background:transparent;color:var(--ink);cursor:pointer;padding:9px 12px;font-family:var(--font-ui)}
   .state-row:last-child{border-bottom:0}
+  .state-row,.haz>summary,.theme-toggle,#state-select{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
   .state-row:hover{background:var(--surface-2)}
   .state-row[aria-current="true"]{background:var(--band);box-shadow:inset 3px 0 0 var(--accent)}
   .state-row .rk{font-family:var(--font-mono);font-size:12px;color:var(--faint)}
@@ -138,6 +151,14 @@
   .cal-note span{display:inline-flex;align-items:center;gap:6px}
   .cal-note .band-key{width:14px;height:12px;border-radius:2px;background:var(--band);
     border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+  /* phones: let the 12-month grid fit the screen instead of scrolling sideways */
+  @media (max-width:560px){
+    .cal-wrap{padding:12px 10px 12px}
+    .cal{min-width:0;grid-template-columns:86px repeat(12,1fr);gap:3px}
+    .cal .rlabel{font-size:11px;line-height:1.15;white-space:normal;padding-right:4px}
+    .cal .mhead{font-size:10.5px}
+    .cal .cell{height:18px}
+  }
 
   /* hazard groups */
   .grp{margin-bottom:22px}
@@ -190,6 +211,7 @@
       <div class="rail-head">
         <label>50 states · most → least hazardous</label>
         <input id="state-search" type="text" placeholder="Search a state…" autocomplete="off" aria-label="Search states">
+        <select id="state-select" aria-label="Choose your state"></select>
       </div>
       <ol class="state-list" id="stateList"></ol>
     </aside>
@@ -301,7 +323,7 @@
     return h;
   }
 
-  function select(ab){
+  function select(ab, opts){
     current=ab;
     const s=DATA.states[ab];
     Array.prototype.forEach.call(listEl.querySelectorAll(".state-row"),function(b){
@@ -323,7 +345,8 @@
       '<div class="chips">'+chips+'</div>'+
       '<p class="section-label">The seasonal stagger</p>'+ calendar(s)+
       '<p class="section-label">What’s out there &amp; the same-night red flags</p>'+ hazardGroups(s);
-    d.scrollIntoView({block:"nearest"});
+    if(!(opts&&opts.noScroll)) d.scrollIntoView({block:"nearest"});
+    const sel=document.getElementById("state-select"); if(sel && sel.value!==ab) sel.value=ab;
   }
 
   document.getElementById("state-search").addEventListener("input", function(e){
@@ -347,7 +370,11 @@
     'This maps <b>risk exposure</b> — what a pet could encounter — not a poisoning rate. When in doubt, call your vet or ASPCA Poison Control (888-426-4435).';
 
   renderRail("");
-  select(ENTRIES[0][0]); // #1 state
+  // mobile: native state picker (the 50-row list + search are hidden on small screens)
+  const selEl=document.getElementById("state-select");
+  ENTRIES.forEach(function(e){ const o=document.createElement("option"); o.value=e[0]; o.textContent="#"+e[1].rank+"  "+e[1].name; selEl.appendChild(o); });
+  selEl.addEventListener("change", function(){ select(this.value); });
+  select(ENTRIES[0][0], {noScroll:true}); // #1 state — don't yank the page down on first load
 })();
 </script>
 
