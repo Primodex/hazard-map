@@ -117,7 +117,7 @@
     border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
     border-radius:var(--radius);padding:14px 16px;margin-bottom:22px}
   .callout .big{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--accent-ink);line-height:1}
-  .callout .lbl{font-size:12.5px;font-weight:600;color:var(--muted)}
+  .callout .lbl{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
   .callout p{margin:3px 0 0;font-size:13.5px;color:var(--muted)}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
@@ -127,7 +127,7 @@
   .chip b{font-variant-numeric:tabular-nums}
   .chip.zero{color:var(--muted);border-style:dashed}
 
-  .section-label{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 12px;
+  .section-label{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin:0 0 12px;
     display:flex;align-items:center;gap:10px}
   .section-label::after{content:"";flex:1;height:1px;background:var(--line)}
 
@@ -136,26 +136,26 @@
     background:var(--surface);padding:14px 16px 16px;margin-bottom:30px}
   .cal{min-width:520px;display:grid;grid-template-columns:120px repeat(12,1fr);gap:4px;align-items:center}
   .cal .corner{grid-column:1}
-  .cal .mhead{font-family:var(--font-mono);font-size:10px;color:var(--faint);text-align:center;padding-bottom:2px}
-  .cal .mhead.peak{color:var(--accent-ink);font-weight:700}
+  .cal .mhead{font-size:11px;color:var(--muted);text-align:center;padding-bottom:3px}
+  .cal .mhead .m1{display:none}
+  .cal .mhead.peak{color:var(--accent-ink);font-weight:700;box-shadow:inset 0 -2px 0 var(--accent)}
   .cal .tbar{height:26px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:2px}
-  .cal .tbar>i{width:62%;background:var(--accent);border-radius:2px 2px 0 0;opacity:.9;min-height:2px}
+  .cal .tbar>i{width:62%;background:var(--accent);border-radius:2px 2px 0 0;opacity:.75;min-height:2px}
+  .cal .tbar.peak>i{background:var(--accent-ink);opacity:1}
   .cal .rlabel{font-size:12.5px;color:var(--ink);display:flex;align-items:center;gap:7px;font-weight:500}
   .cal .rlabel .dot{width:9px;height:9px;border-radius:2px;flex:none}
   .cal .cell{height:20px;border-radius:3px;background:var(--line);opacity:.35}
   .cal .cell.on{opacity:1}
-  .cal .cell.peakcol{box-shadow:inset 0 0 0 1.5px var(--band)}
-  .cal .cell.yr{opacity:1;background:repeating-linear-gradient(45deg,var(--c-plant) 0 3px,transparent 3px 6px)}
   .cal-note{font-size:12px;color:var(--muted);margin:12px 0 0;display:flex;gap:16px;flex-wrap:wrap}
   .cal-note span{display:inline-flex;align-items:center;gap:6px}
-  .cal-note .band-key{width:14px;height:12px;border-radius:2px;background:var(--band);
-    border:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
   /* phones: let the 12-month grid fit the screen instead of scrolling sideways */
   @media (max-width:560px){
     .cal-wrap{padding:12px 10px 12px}
     .cal{min-width:0;grid-template-columns:86px repeat(12,1fr);gap:3px}
     .cal .rlabel{font-size:11px;line-height:1.15;white-space:normal;padding-right:4px}
     .cal .mhead{font-size:10.5px}
+    .cal .mhead .m3{display:none}
+    .cal .mhead .m1{display:inline}
     .cal .cell{height:18px}
   }
 
@@ -273,17 +273,18 @@
 
   // ---- calendar ----
   function calendar(s){
-    const tc = s.monthly_typecount;
+    const hasPlants = s.subscores.plant>0;
+    const tc = s.monthly_typecount.map(function(v){return v+(hasPlants?1:0);});
     const mx = Math.max.apply(null, tc.concat([1]));
     const peak = tc.map(function(v){return v===Math.max.apply(null,tc) && v>0;});
     let h='<div class="cal-wrap"><div class="cal">';
     h+='<div class="corner"></div>';
-    for(let m=0;m<12;m++) h+='<div class="mhead'+(peak[m]?' peak':'')+'" aria-hidden="true">'+MON[m][0]+'</div>';
+    for(let m=0;m<12;m++) h+='<div class="mhead'+(peak[m]?' peak':'')+'" aria-hidden="true"><span class="m3">'+MON[m]+'</span><span class="m1">'+MON[m][0]+'</span></div>';
     // overlap intensity strip
     h+='<div class="rlabel" style="color:var(--muted);font-size:11.5px;font-weight:600">Hazards active<span class="sr-only"> by month: '+tc.map(function(v,i){return MON[i]+' '+v;}).join(', ')+'</span></div>';
     for(let m=0;m<12;m++){
       const hgt=Math.round(6+ (tc[m]/mx)*20);
-      h+='<div class="tbar" aria-hidden="true"><i style="height:'+hgt+'px"></i></div>';
+      h+='<div class="tbar'+(peak[m]?' peak':'')+'" aria-hidden="true"><i style="height:'+hgt+'px"></i></div>';
     }
     TYPES.forEach(function(t){
       const key=t[0];
@@ -293,14 +294,13 @@
       const on = {}; months.forEach(function(m){on[m]=1;});
       h+='<div class="rlabel"><span class="dot" style="background:'+cssvar(t[2])+'"></span>'+t[1]+'<span class="sr-only">, active '+(yr?'all year':(months.length?months.map(function(m){return MON[m-1];}).join(', '):'no months recorded'))+'</span></div>';
       for(let m=1;m<=12;m++){
-        const cls="cell"+(on[m]?" on":"")+(yr?" yr":"")+(peak[m-1]?" peakcol":"");
-        const st = (on[m] && !yr) ? ' style="background:'+cssvar(t[2])+'"' : "";
+        const cls="cell"+(on[m]?" on":"");
+        const st = on[m] ? ' style="background:'+cssvar(t[2])+'"' : "";
         h+='<div class="'+cls+'"'+st+' aria-hidden="true"></div>';
       }
     });
     h+='</div>';
-    h+='<p class="cal-note"><span><span class="band-key"></span>Riskiest window: <b style="color:var(--accent-ink);margin-left:3px">'+esc(s.peak_overlap)+'</b> ('+s.peak_types+' kinds of hazard active at once)</span>'+
-       '<span>Toxic plants are a risk all year, so they are shaded in every month.</span></p>';
+    h+='<p class="cal-note"><span>Riskiest window: <b style="color:var(--accent-ink);margin-left:3px">'+esc(s.peak_overlap)+'</b> ('+(s.peak_types+(hasPlants?1:0))+' kinds of hazard active at once)</span></p>';
     h+='</div>';
     return h;
   }
@@ -352,7 +352,7 @@
       '<p class="d-sub"><b class="num">'+s.n_present+'</b> outdoor hazards found in '+esc(s.name)+' · hazard score <b class="num">'+s.score.toFixed(0)+'</b> out of 100</p>'+
       '<div class="callout"><div><div class="lbl">Riskiest time of year</div>'+
         '<div class="big">'+esc(s.peak_overlap||"—")+'</div>'+
-        '<p>'+s.peak_types+' kinds of hazard are active at the same time. Keep off-leash pets closest during this stretch.</p></div></div>'+
+        '<p>'+(s.peak_types+(s.subscores.plant>0?1:0))+' kinds of hazard are active at the same time. Keep off-leash pets closest during this stretch.</p></div></div>'+
       '<div class="chips">'+chips+'</div>'+
       '<h3 class="section-label">When each hazard is active</h3>'+ calendar(s)+
       '<h3 class="section-label">What’s in your state, and when it’s an emergency</h3>'+ hazardGroups(s);
